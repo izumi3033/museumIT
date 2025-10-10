@@ -1,0 +1,4 @@
+.cardTitle{font-size:20px;font-weight:700;margin-bottom:12px}
+.subtle{color:var(--muted)}
+.stack{display:grid;gap:10px}
+.kbd{background:#111821;border:1px solid #1f2a3a;padding:2px 6px;border-radius:6px}
