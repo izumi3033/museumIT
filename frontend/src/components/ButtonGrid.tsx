@@ -1,23 +1,28 @@
-import styles from "../styles/grid.module.css";
+import React from "react";
 
-export default function ButtonGrid(
-  { selected, liveIncoming, onSelect }:
-  { selected?:number|null; liveIncoming?:number|null; onSelect?:(n:number)=>void }
-){
-  const buttons = Array.from({length:15},(_,i)=>i+1);
+interface ButtonGridProps {
+  active: number | null;
+}
+
+const ButtonGrid: React.FC<ButtonGridProps> = ({ active }) => {
+  const items = Array.from({ length: 15 }, (_, i) => i + 1);
   return (
-    <div className={styles.grid} role="grid" aria-label="buttons grid">
-      {buttons.map(n=>{
-        const isSelected = selected===n;
-        const isLive = liveIncoming===n;
+    <div className="grid">
+      {items.map((n) => {
+        // 番号ごとに c1..c15 の色クラスを付与
+        const colorClass = `c${n}`;
+        const isActive = active === n;
         return (
-          <button key={n}
-            className={[styles.btn, isSelected?styles.selected:"", isLive?styles.live:""].join(" ")}
-            onClick={()=>onSelect?.(n)} aria-pressed={isSelected}>
+          <div
+            key={n}
+            className={`grid-item ${colorClass} ${isActive ? "active" : ""}`}
+          >
             {n}
-          </button>
+          </div>
         );
       })}
     </div>
   );
-}
+};
+
+export default ButtonGrid;
