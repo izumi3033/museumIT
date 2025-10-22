@@ -1,2 +1,6 @@
 .env
 backend/__pycache__/.env
+service_account.json
+.env
+*.pem
+*.p12
