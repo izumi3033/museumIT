@@ -1,0 +1,8 @@
+/* Start Screen */
+.start-wrap{
+    margin-top: -10vh;            /* スクショの位置感に近づける */
+  }
+  .start-title{
+    margin-bottom: 24px;
+  }
+  

@@ -1,9 +1,0 @@
-.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:16px}
-.btn{
-  background:#1b2431;padding:20px 0;border-radius:14px;font-weight:800;font-size:20px;outline:none;
-  transition:transform .05s ease,box-shadow .2s ease,background .2s ease;box-shadow:0 3px 0 #0b0f15,0 8px 20px rgba(0,0,0,.2)
-}
-.btn:hover{transform:translateY(-1px)}
-.btn:active{transform:translateY(1px)}
-.selected{outline:3px solid var(--ring);background:#233346}
-.live{border:2px dashed var(--accent)}

@@ -1,21 +1,34 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Start from "./pages/Start";
-import PressButton from "./pages/PressButton";
-import Confirm from "./pages/Confirm";
-import Results from "./pages/Results";
-import Survey from "./pages/Survey";
-import "./styles/globals.css";
+import React, { useState } from "react";
+import StartScreen from "./screens/StartScreen";
+import CountdownScreen from "./screens/CountdownScreen";
+import ResultScreen from "./screens/ResultScreen";
+import SurveyScreen from "./screens/SurveyScreen";
 
-export default function App(){
+function App() {
+  const [screen, setScreen] = useState<"start"|"countdown"|"result"|"survey">("start");
+  const [selectedButton, setSelectedButton] = useState<number|null>(null);
+
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Start/>} />
-        <Route path="/press" element={<PressButton/>} />
-        <Route path="/confirm" element={<Confirm/>} />
-        <Route path="/results" element={<Results/>} />
-        <Route path="/survey" element={<Survey/>} />
-      </Routes>
-    </BrowserRouter>
+    <div className="app-shell">
+      {screen === "start" && <StartScreen onStart={() => setScreen("countdown")} />}
+      {screen === "countdown" && (
+        <CountdownScreen
+          onButtonDetected={(btn) => { setSelectedButton(btn); setScreen("result"); }}
+          onTimeout={() => setScreen("start")}
+        />
+      )}
+      {screen === "result" && (
+        <ResultScreen
+          button={selectedButton}
+          onConfirm={() => setScreen("survey")}
+          onBack={() => setScreen("countdown")}
+        />
+      )}
+      {screen === "survey" && (
+        <SurveyScreen onBackToStart={() => setScreen("start")} />
+      )}
+    </div>
   );
 }
+
+export default App;

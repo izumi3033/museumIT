@@ -1,0 +1,13 @@
+/* Result Screen */
+.result-wrap .h2{
+    margin-bottom: 6px;
+  }
+  
+  .result-actions{
+    margin-top: 12px;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
