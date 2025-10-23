@@ -1,35 +1,34 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import StartScreen from "./screens/StartScreen";
+import CountdownScreen from "./screens/CountdownScreen";
+import ResultScreen from "./screens/ResultScreen";
+import SurveyScreen from "./screens/SurveyScreen";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [screen, setScreen] = useState<"start"|"countdown"|"result"|"survey">("start");
+  const [selectedButton, setSelectedButton] = useState<number|null>(null);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="app-shell">
+      {screen === "start" && <StartScreen onStart={() => setScreen("countdown")} />}
+      {screen === "countdown" && (
+        <CountdownScreen
+          onButtonDetected={(btn) => { setSelectedButton(btn); setScreen("result"); }}
+          onTimeout={() => setScreen("start")}
+        />
+      )}
+      {screen === "result" && (
+        <ResultScreen
+          button={selectedButton}
+          onConfirm={() => setScreen("survey")}
+          onBack={() => setScreen("countdown")}
+        />
+      )}
+      {screen === "survey" && (
+        <SurveyScreen onBackToStart={() => setScreen("start")} />
+      )}
+    </div>
+  );
 }
 
-export default App
+export default App;

@@ -1,0 +1,77 @@
+/* Survey (Stats + QR) */
+.stats-card{
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 20px;
+    margin-top: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    width: min(90vw, 800px);
+    text-align: left;
+    color: #1e293b;
+  }
+  
+  .stats-total{
+    font-weight: 700;
+    margin: 6px 0 10px;
+    color: #0f172a;
+  }
+  
+  .stats-bars{
+    display: grid;
+    gap: 10px;
+  }
+  
+  /* 1行（ラベル｜バー｜数値） */
+  .stat-row{
+    display: grid;
+    grid-template-columns: 48px 1fr 60px;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .stat-label{
+    font-weight: 700;
+    text-align: right;
+    color: #0f172a;
+  }
+  
+  .stat-track{
+    height: 16px;
+    border-radius: 10px;
+    background: #f1f5f9;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+  }
+  
+  .stat-fill{
+    height: 100%;
+    background: #60a5fa;  /* 背景と同化しない見やすい青 */
+    width: 0%;
+    transition: width .35s ease;
+  }
+  
+  .stat-perc{
+    font-weight: 700;
+    text-align: left;
+    color: #0f172a;
+  }
+  
+  /* QR */
+  .qr-wrap{
+    margin-top: 18px;
+    text-align: center;
+  }
+  .qr-caption{
+    font-size: 14px;
+    color: #475569;
+    margin-top: 6px;
+  }
+  
+  /* Responsive */
+  @media (max-width: 520px){
+    .stat-row{
+      grid-template-columns: 40px 1fr 50px;
+      gap: 10px;
+    }
+  }
+  

@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+:root{
+  --ink:#1e293b;
+  --ink-weak:#475569;
+  --bg-a:#aee1ff;  /* light blue */
+  --bg-b:#b8f2ff;  /* aqua */
+  --bg-c:#d8eaff;  /* pastel */
+  --btn:#ffd55a;   /* warm yellow */
+}
+
+html, body, #root, .app-shell { height: 100%; margin: 0; }
+* { box-sizing: border-box; }
+
+body, .app-shell{
+  font-family: "Inter","Noto Sans JP",system-ui,sans-serif;
+  color: var(--ink);
+}
+
+/* 背景：淡いブルーのグラデ */
+.app-shell{
+  display:flex; align-items:center; justify-content:center;
+  background: linear-gradient(160deg, var(--bg-a), var(--bg-b), var(--bg-c));
+  background-size: 200% 200%;
+  animation: bgMove 12s ease-in-out infinite;
+}
+@keyframes bgMove{
+  0%{ background-position: 0% 50%; }
+  50%{ background-position: 100% 50%; }
+  100%{ background-position: 0% 50%; }
+}
+
+/* 共通カード（薄め・フラット） */
+.card{
+  text-align:center;
+  width:min(95vw, 900px);
+  padding: 24px;
+}
+
+/* タイトル */
+.h1{ font-size: clamp(28px, 5vw, 40px); font-weight: 700; color:#0f172a; text-shadow:0 1px 2px rgba(255,255,255,.6); }
+.h2{ font-size: clamp(22px, 4vw, 28px); font-weight: 700; color:#0f172a; }
+.h3{ font-size: clamp(15px, 3.2vw, 18px); color: var(--ink-weak); }
+
+.stack{ display:grid; gap:18px; justify-items:center; }
+.actions{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+
+/* 共通ボタン */
+.btn{
+  background: var(--btn);
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 18px;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.12);
+  cursor: pointer;
+  transition: transform .2s ease, filter .2s ease, background .2s ease;
+}
+.btn:hover{ filter: brightness(1.03); transform: translateY(-2px); }
+.btn:active{ filter: brightness(.98); transform: translateY(1px); }
+.btn.secondary{ background:#e6eefc; }
+.btn.ghost{ background: rgba(255,255,255,.6); border:1px solid rgba(0,0,0,.06); }
+
+/* アクセシビリティ */
+.btn:focus-visible, .grid-item:focus-visible{
+  outline: 3px solid #2563eb; outline-offset: 2px; border-radius: 14px;
+}
