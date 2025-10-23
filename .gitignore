@@ -4,3 +4,4 @@ service_account.json
 .env
 *.pem
 *.p12
+service_account.json
