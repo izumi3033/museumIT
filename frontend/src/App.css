@@ -1,5 +1,4 @@
 /* ===== POP THEME ===== */
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Inter:wght@400;700&display=swap');
 
 :root{
   --bg-1:#FFD1FF;
@@ -28,12 +27,6 @@ html, body, #root, .app-shell { height: 100%; margin: 0; }
   animation: bgShift 14s ease-in-out infinite;
   font-family: "Baloo 2", "Inter", system-ui, -apple-system, "Noto Sans JP", sans-serif;
   color:#222; /* テキストも黒に */
-}
-
-@keyframes bgShift{
-  0%{ background-position: 0% 50%; }
-  50%{ background-position: 100% 50%; }
-  100%{ background-position: 0% 50%; }
 }
 
 @keyframes bgShift{

@@ -58,13 +58,17 @@
   
   /* QR */
   .qr-wrap{
-    margin-top: 18px;
+    margin-top: 15px;
     text-align: center;
   }
+  .qr-wrap img{
+    max-width: 200px;
+    height: auto;
+  }
   .qr-caption{
-    font-size: 14px;
+    font-size: 16px;
     color: #475569;
-    margin-top: 6px;
+    margin-top: 2px;
   }
   
   /* Responsive */
@@ -74,4 +78,3 @@
       gap: 10px;
     }
   }
-  

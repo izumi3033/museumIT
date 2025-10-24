@@ -19,7 +19,7 @@ class Settings(BaseSettings):
     worksheet_index: int = Field(default=1, alias="SHEET_WORKSHEET_INDEX")  # 1始まり
 
     # Serial（← ここに alias を明示）
-    serial_port: str = Field(default="/dev/tty.usbmodem11201", alias="SERIAL_PORT")
+    serial_port: str = Field(default="/dev/tty.usbmodem1301", alias="SERIAL_PORT")
     baudrate: int = Field(default=9600, alias="BAUDRATE")
 
     # Server
