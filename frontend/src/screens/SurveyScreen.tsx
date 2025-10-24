@@ -11,7 +11,7 @@ const SurveyScreen: React.FC<Props> = ({ onBackToStart }) => {
     <div className="card stack">
       <div className="h1">アンケート</div>
       
-      <QRCodeBox url="https://forms.gle/your-survey-url" title="アンケートにご協力ください" />
+      <QRCodeBox title="アンケートにご協力ください" url={""} />
       
       <button className="btn secondary" onClick={onBackToStart}>スタート画面に戻る</button>
     </div>
