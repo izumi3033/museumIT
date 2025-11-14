@@ -1,15 +1,52 @@
-import { useState } from "react";
-import CountdownScreen from "./screens/CountdownScreen";
+import { useEffect, useRef, useState } from "react";
+import ButtonGrid from "./components/ButtonGrid";
+import ButtonDetailScreen from "./screens/ButtonScreens";
+import { fetchEvents, resetLatest } from "./api";
 
 function App() {
-  const [seed, setSeed] = useState(0);
+  const [activeButton, setActiveButton] = useState<number | null>(null);
+  const pollRef = useRef<number | null>(null);
+
+  // ハードウェア押下検出ポーリング
+  useEffect(() => {
+    if (activeButton !== null) {
+      // 選択中は停止
+      if (pollRef.current) clearInterval(pollRef.current);
+      pollRef.current = null;
+      return;
+    }
+    // 最新リセット
+    resetLatest().catch(()=>{});
+    pollRef.current = window.setInterval(async () => {
+      try {
+        const ev = await fetchEvents();
+        if (ev.button) {
+          setActiveButton(ev.button);
+        }
+      } catch (e) {
+        // 失敗時は無視
+      }
+    }, 600);
+    return () => { if (pollRef.current) clearInterval(pollRef.current); };
+  }, [activeButton]);
+
+  const handleSelect = (btn: number) => setActiveButton(btn);
+  const handleBack = () => {
+    setActiveButton(null);
+    resetLatest().catch(()=>{});
+  };
+
   return (
     <div className="app-shell">
-      <CountdownScreen
-        key={seed}
-        onButtonDetected={() => {}}
-        onTimeout={() => setSeed((s) => s + 1)}
-      />
+      {activeButton !== null ? (
+        <ButtonDetailScreen button={activeButton} onBack={handleBack} />
+      ) : (
+        <div className="card stack">
+          <div className="h2">どれかのボタンを押してください</div>
+          <div className="h3">物理ボタンの押下を自動検出 / 画面でクリックでも可</div>
+          <ButtonGrid activeButton={null} onSelect={handleSelect} />
+        </div>
+      )}
     </div>
   );
 }
