@@ -4,10 +4,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from datetime import datetime
 from settings import settings
-from gs_client import repo
 from serial_worker import start_serial_thread, state
 from models import ConfirmBody
-from utils import stats_cache
 
 app = FastAPI(title="ButtonVote API", version="2.0.0")
 
@@ -25,14 +23,7 @@ stop_serial = None
 @app.on_event("startup")
 def _startup():
     global stop_serial
-    # Google接続チェック（失敗しても起動継続）
-    try:
-        _ = repo.get_all_values()
-        print({"lvl":"info","msg":"GS online","sheet":settings.sheet_name})
-    except Exception as e:
-        print({"lvl":"error","msg":"GS connect failed on startup","err":str(e)})
-
-    # シリアル監視スレッド起動
+    # シリアル監視スレッド起動のみ
     stop_serial = start_serial_thread(settings.serial_port, settings.baudrate)
     print({"lvl":"info","msg":"serial worker started","port":settings.serial_port,"baud":settings.baudrate})
 
@@ -58,11 +49,8 @@ def events():
 
 @app.get("/stats")
 def stats():
-    try:
-        data = stats_cache.get()
-        return data
-    except Exception as e:
-        return JSONResponse(status_code=500, content={"error": str(e)})
+    # 簡単な統計（保存なし）
+    return {"message": "Stats feature removed - no database"}
 
 @app.post("/confirm")
 def confirm(body: ConfirmBody | None = None):
@@ -79,13 +67,8 @@ def confirm(body: ConfirmBody | None = None):
         return JSONResponse(status_code=400, content={"error": "no button"})
 
     ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    text = f"{btn} "
-    try:
-        repo.append_row([ts, text])
-        stats_cache.invalidate()
-        print({"lvl":"info","msg":"GS appended","time":ts,"btn":btn})
-    except Exception as e:
-        return JSONResponse(status_code=500, content={"error": str(e)})
+    # Google Sheets保存を削除 - ただログのみ
+    print({"lvl":"info","msg":"button confirmed","time":ts,"btn":btn,"note":"no_save"})
 
     return {"status": "ok", "button": btn, "time": ts}
 
