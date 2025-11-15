@@ -26,13 +26,35 @@ const descriptions: Record<number,string> = {
   15:"O: 9.9％",
 };
 
+const parsePercent = (s: string): number => {
+  const m = s.match(/([0-9]+(?:\.[0-9]+)?)％/);
+  return m ? parseFloat(m[1]) : 0;
+};
+
 const ButtonDetailScreen: React.FC<Props> = ({ button, onBack }) => {
+  const text = descriptions[button] ?? "データなし";
+  const pct = parsePercent(text);
+  const pctStr = pct.toFixed(1) + "%";
+  const handleMove: React.MouseEventHandler<HTMLDivElement> = (e) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - r.left) / r.width) * 100;
+    const y = ((e.clientY - r.top) / r.height) * 100;
+    e.currentTarget.style.setProperty("--x", x + "%");
+    e.currentTarget.style.setProperty("--y", y + "%");
+  };
   return (
-    <div className="card stack">
-      <div className="h2">ボタン {labels(button)} が押されました</div>
-      <p style={{margin:0, fontSize: "28px", fontWeight: 700}}>{descriptions[button] ?? "このボタンの説明は未設定です。"}</p>
+    <div className="card fun-detail stack" onMouseMove={handleMove}>
+      <div className="flare" />
+      <div className="h2">{String.fromCharCode(64 + button)} を選んだ人の割合</div>
+      <div className="percentage-badge" aria-label={pctStr}>{pctStr}</div>
+      <div className="progress-wrap">
+        <div className="progress-bar" style={{"--w": pct + "%"} as React.CSSProperties}>
+          <span />
+        </div>
+        <div className="progress-label">全体の {pctStr}</div>
+      </div>
       <div className="actions" style={{marginTop: "24px"}}>
-        <button className="btn secondary" onClick={onBack}>戻る</button>
+        <button className="btn back-btn-fun" onClick={onBack}>戻る</button>
       </div>
     </div>
   );

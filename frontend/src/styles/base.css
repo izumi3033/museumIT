@@ -74,3 +74,78 @@ body, .app-shell{
 .grid-item:hover{ background:#dbeafe; transform:translateY(-3px); }
 .grid-item.active{ background:#60a5fa; color:#fff; box-shadow:0 0 14px rgba(96,165,250,.7); transform:scale(1.08); }
 .grid-item:focus-visible{ outline:3px solid #3b82f6; outline-offset:2px; }
+
+/* === Fun Theme Enhancements === */
+:root{
+  --fun-pink:#ff66c4;
+  --fun-purple:#8b5cf6;
+  --fun-green:#10b981;
+  --fun-orange:#ff922b;
+  --fun-red:#ff3d5a;
+  --fun-blue:#3b82f6;
+}
+
+.card.fun-detail{
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.9), rgba(255,255,255,.75)),
+              linear-gradient(135deg,#ffe7a3,#ffc2f2,#b5e3ff);
+  border-radius: 28px;
+  padding: 40px 48px;
+  box-shadow: 0 12px 28px -6px rgba(0,0,0,.18), 0 0 0 4px rgba(255,255,255,.5);
+  position: relative;
+  overflow: hidden;
+}
+.card.fun-detail:before{
+  content:"";
+  position:absolute; inset:0;
+  background: repeating-conic-gradient(from 0deg, rgba(255,255,255,.15) 0deg 18deg, transparent 18deg 36deg);
+  mix-blend-mode: overlay; pointer-events:none;
+  animation: spinBg 18s linear infinite;
+}
+@keyframes spinBg{ to{ transform: rotate(360deg); } }
+
+.percentage-badge{
+  font-size: clamp(48px, 9vw, 90px);
+  font-weight: 800;
+  line-height:1;
+  letter-spacing: -2px;
+  background: linear-gradient(90deg,var(--fun-pink),var(--fun-purple),var(--fun-blue));
+  -webkit-background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,.15));
+  animation: popIn .6s cubic-bezier(.25,1.4,.4,.9);
+}
+@keyframes popIn{ 0%{ transform: scale(.3) rotate(-8deg); opacity:0; } 70%{ transform: scale(1.08); } 100%{ transform: scale(1); opacity:1; } }
+
+.flare{
+  position:absolute; inset:0; pointer-events:none;
+  background: radial-gradient(circle at var(--x,50%) var(--y,50%), rgba(255,255,255,.9), transparent 60%);
+  mix-blend-mode: screen; opacity:.35; transition: .4s;
+}
+
+.progress-wrap{ width:100%; max-width:560px; }
+.progress-bar{
+  height: 28px;
+  background: linear-gradient(90deg,var(--fun-green),var(--fun-blue));
+  border-radius: 999px;
+  position: relative;
+  overflow:hidden;
+  box-shadow:0 4px 10px rgba(0,0,0,.18);
+}
+.progress-bar span{
+  position:absolute; inset:0;
+  background: linear-gradient(90deg,var(--fun-orange),var(--fun-pink),var(--fun-purple));
+  width: var(--w,0%);
+  display:block;
+  border-radius:inherit;
+  animation: fillGrow .9s cubic-bezier(.25,.9,.35,1.2);
+}
+@keyframes fillGrow{ 0%{ width:0; } }
+.progress-label{ margin-top:10px; font-weight:600; font-size:18px; }
+
+.back-btn-fun{ background: linear-gradient(90deg,var(--fun-purple),var(--fun-blue)); color:#fff; }
+.back-btn-fun:hover{ filter:brightness(1.1); }
+.back-btn-fun:active{ filter:brightness(.9); }
+
+/* グリッドアイテムの陽気なアニメ */
+.grid-item.active{ animation: bounceActive 1.2s ease infinite alternate; }
+@keyframes bounceActive{ 0%{ transform: scale(1.05); } 100%{ transform: scale(1.12); } }
