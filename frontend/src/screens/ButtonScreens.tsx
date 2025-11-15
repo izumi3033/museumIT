@@ -1,12 +1,10 @@
 // ボタン詳細画面（テキストのみ表示に簡素化）
-import React from "react";
+import React, { useEffect, useState } from "react"; // useState追加
 
 interface Props {
   button: number; // 1-15
   onBack: () => void;
 }
-
-const labels = (num: number) => String.fromCharCode(64 + num); // 1->A
 
 const descriptions: Record<number,string> = {
   1: "A: 23.2％",
@@ -32,6 +30,28 @@ const parsePercent = (s: string): number => {
 };
 
 const ButtonDetailScreen: React.FC<Props> = ({ button, onBack }) => {
+  const TOTAL_SECONDS = 8;
+  const [remaining, setRemaining] = useState(TOTAL_SECONDS);
+
+  // カウントダウンと自動戻り
+  useEffect(() => {
+    setRemaining(TOTAL_SECONDS);
+    const timeout = setTimeout(onBack, TOTAL_SECONDS * 1000);
+    const interval = setInterval(() => {
+      setRemaining(prev => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => {
+      clearTimeout(timeout);
+      clearInterval(interval);
+    };
+  }, [button, onBack]);
+
   const text = descriptions[button] ?? "データなし";
   const pct = parsePercent(text);
   const pctStr = pct.toFixed(1) + "%";
@@ -43,20 +63,25 @@ const ButtonDetailScreen: React.FC<Props> = ({ button, onBack }) => {
     e.currentTarget.style.setProperty("--y", y + "%");
   };
   return (
-    <div className="card fun-detail stack" onMouseMove={handleMove}>
-      <div className="flare" />
-      <div className="h2">{String.fromCharCode(64 + button)} を選んだ人の割合</div>
-      <div className="percentage-badge" aria-label={pctStr}>{pctStr}</div>
-      <div className="progress-wrap">
-        <div className="progress-bar" style={{"--w": pct + "%"} as React.CSSProperties}>
-          <span />
+    <> {/* 枠外にカウントダウンを移動 */}
+      <div className="countdown-banner" aria-live="polite">
+        {remaining > 0 ? `${remaining}秒で戻ります` : "戻ります"}
+      </div>
+      <div className="card fun-detail stack" onMouseMove={handleMove}>
+        <div className="flare" />
+        <div className="h2" style={{fontSize: "1.6rem"}}>{String.fromCharCode(64 + button)} を選んだ人の割合</div>
+        <div className="percentage-badge" style={{fontSize:"3.6rem"}} aria-label={pctStr}>{pctStr}</div>
+        <div className="progress-wrap">
+          <div className="progress-bar" style={{"--w": pct + "%"} as React.CSSProperties}>
+            <span />
+          </div>
+          <div className="progress-label">全体の {pctStr}</div>
         </div>
-        <div className="progress-label">全体の {pctStr}</div>
+        <div className="actions" style={{marginTop: "24px"}}>
+          <button className="btn back-btn-fun" onClick={onBack}>戻る</button>
+        </div>
       </div>
-      <div className="actions" style={{marginTop: "24px"}}>
-        <button className="btn back-btn-fun" onClick={onBack}>戻る</button>
-      </div>
-    </div>
+    </>
   );
 };
 

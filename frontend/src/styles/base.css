@@ -31,10 +31,11 @@ body, .app-shell{
 }
 
 /* 共通カード（薄め・フラット） */
-.card{
+.card{ /* シンプル半透明カード化 (5) */
   text-align:center;
   width:min(95vw, 900px);
-  padding: 24px;
+  padding:24px;
+  /* 以前のシンプル定義へ戻す（背景/影削除） */
 }
 
 /* タイトル */
@@ -85,15 +86,16 @@ body, .app-shell{
   --fun-blue:#3b82f6;
 }
 
-.card.fun-detail{
+.card.fun-detail{ /* 派手なグラデ排除→半透明白 (5) */
   background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.9), rgba(255,255,255,.75)),
               linear-gradient(135deg,#ffe7a3,#ffc2f2,#b5e3ff);
-  border-radius: 28px;
-  padding: 40px 48px;
+  border-radius:28px; /* 元の角丸に戻す */
+  padding:40px 48px;
   box-shadow: 0 12px 28px -6px rgba(0,0,0,.18), 0 0 0 4px rgba(255,255,255,.5);
-  position: relative;
-  overflow: hidden;
+  position:relative;
+  overflow:hidden;
 }
+/* 装飾用の before を無効化 */
 .card.fun-detail:before{
   content:"";
   position:absolute; inset:0;
@@ -149,3 +151,46 @@ body, .app-shell{
 /* グリッドアイテムの陽気なアニメ */
 .grid-item.active{ animation: bounceActive 1.2s ease infinite alternate; }
 @keyframes bounceActive{ 0%{ transform: scale(1.05); } 100%{ transform: scale(1.12); } }
+
+/* カウントダウンバナー */
+.countdown-banner{
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255,255,255,.85);
+  padding: 10px 22px;
+  border-radius: 999px;
+  font-weight:700;
+  font-size: 26px;
+  letter-spacing: .5px;
+  box-shadow:0 6px 18px rgba(0,0,0,.15);
+  backdrop-filter: blur(4px);
+  animation: fadeSlide .5s ease;
+}
+@keyframes fadeSlide{ 0%{ opacity:0; transform: translate(-50%,-10px);} 100%{ opacity:1; transform: translate(-50%,0);} }
+
+/* ポップなタイトル */
+.pop-title{
+  font-size: clamp(30px,6vw,54px);
+  font-weight: 800;
+  background: linear-gradient(90deg,#ff8ec7,#ffa940,#6ec3ff,#a78bfa);
+  -webkit-background-clip:text;
+  color: transparent;
+  position: relative;
+  padding: 6px 18px 10px;
+  text-shadow: 0 4px 14px rgba(0,0,0,.15);
+  animation: popWave 1.2s cubic-bezier(.25,1.4,.35,1) both;
+  letter-spacing: .5px;
+  border:none; box-shadow:none; /* 簡素化スタイルの残渣を除去 */
+}
+.pop-title:after{
+  content:"";
+  position:absolute; left:10%; right:10%; bottom:4px; height:10px;
+  background: radial-gradient(circle at 30% 50%, rgba(255,255,255,.9), rgba(255,255,255,0) 60%),
+              radial-gradient(circle at 70% 50%, rgba(255,255,255,.9), rgba(255,255,255,0) 60%);
+  filter: blur(6px); opacity:.9; pointer-events:none;
+}
+@keyframes popWave{ 0%{ transform: translateY(12px) scale(.85); opacity:0; letter-spacing:-1px; }
+  60%{ transform: translateY(-4px) scale(1.05);} 100%{ transform: translateY(0) scale(1); opacity:1; }}
+/* 不要になった簡素化用 popReadable キーフレームは使用していないが残っていても害はない */

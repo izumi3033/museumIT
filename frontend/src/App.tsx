@@ -42,8 +42,8 @@ function App() {
         <ButtonDetailScreen button={activeButton} onBack={handleBack} />
       ) : (
         <div className="card stack">
-          <div className="h2">どれかのボタンを押してください</div>
-          <div className="h3">物理ボタンの押下を自動検出 / 画面でクリックでも可</div>
+          <div className="h2 pop-title">好きな場所に傘を刺してください</div>
+          <div className="h3">画面は自動で戻ります</div>
           <ButtonGrid activeButton={null} onSelect={handleSelect} />
         </div>
       )}
