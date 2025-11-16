@@ -42,7 +42,9 @@ function App() {
         <ButtonDetailScreen button={activeButton} onBack={handleBack} />
       ) : (
         <div className="card stack">
-          <div className="h2 pop-title">好きな場所に傘を刺してください</div>
+          <div className="title-box">
+            <div className="h2 pop-title pop-title-red">好きな場所に傘を刺してください</div>
+          </div>
           <div className="h3">画面は自動で戻ります</div>
           <ButtonGrid activeButton={null} onSelect={handleSelect} />
         </div>

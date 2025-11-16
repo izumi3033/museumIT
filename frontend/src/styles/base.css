@@ -194,3 +194,26 @@ body, .app-shell{
 @keyframes popWave{ 0%{ transform: translateY(12px) scale(.85); opacity:0; letter-spacing:-1px; }
   60%{ transform: translateY(-4px) scale(1.05);} 100%{ transform: translateY(0) scale(1); opacity:1; }}
 /* 不要になった簡素化用 popReadable キーフレームは使用していないが残っていても害はない */
+
+/* 白背景の箱 */
+.title-box{
+  background: rgba(255,255,255,.75); /* 半透明で主張を弱く */
+  backdrop-filter: blur(2px);
+  padding: 6px 14px; /* 余白を控えめに */
+  border-radius: 12px; /* 角丸も控えめに */
+  border: 1px solid rgba(15,23,42,.06); /* さりげない枠線 */
+  box-shadow: 0 2px 8px rgba(0,0,0,.08); /* 影を弱く */
+  display:inline-block;
+}
+.title-box .pop-title{ /* タイトル自体も少し落ち着いたサイズ/太さに */
+  font-size: clamp(26px, 5.5vw, 40px); /* サイズを拡大 */
+  font-weight: 700;
+  letter-spacing: .2px;
+}
+.title-box .pop-title.pop-title-red{ /* 赤系統へ再変更 */
+  background: linear-gradient(90deg,#ff9fb1,#ff6b8b,#ff3d5a,#d8004c); /* 柔らかい→鮮やか→深い赤 */
+  -webkit-background-clip: text;
+  color: transparent;
+  padding:0;
+  text-shadow: 0 2px 6px rgba(0,0,0,.12); /* ほんのり影で可読性 */
+}
